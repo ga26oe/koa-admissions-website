@@ -37,7 +37,7 @@ const HeroSection: React.FC = () => {
           fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
           lineHeight="110%"
         >
-          Get Into Your{" "}
+          Get Into Your <br />
           <Text as="span" color="blue.400">
             Top University Choices
           </Text>

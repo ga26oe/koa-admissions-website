@@ -34,6 +34,8 @@ const LogoScroll: React.FC<LogoScrollProps> = ({
     }
   }, []);
 
+  const speedMultiplier = speed === "slow" ? 1.5 : speed === "fast" ? 0.5 : 1;
+
   return (
     <Box
       ref={scrollerRef}
@@ -41,11 +43,10 @@ const LogoScroll: React.FC<LogoScrollProps> = ({
       data-direction={direction}
       data-speed={speed}
       css={{
-        maxWidth: "100%",
+        width: "60%",
+        margin: "0 auto",
         overflow: "hidden",
-        mask: "linear-gradient(90deg, transparent, white 20%, white 80%, transparent)",
-        WebkitMask:
-          "linear-gradient(90deg, transparent, white 20%, white 80%, transparent)",
+        position: "relative",
       }}
     >
       <Box
@@ -53,19 +54,28 @@ const LogoScroll: React.FC<LogoScrollProps> = ({
         className="scroller__inner"
         display="flex"
         flexWrap="nowrap"
-        gap="1rem"
+        position="relative"
         css={{
-          animation:
-            "scroll var(--_animation-duration, 40s) var(--_animation-direction, forwards) linear infinite",
+          animation: `scroll ${40 * speedMultiplier}s linear infinite ${
+            direction === "right" ? "reverse" : ""
+          }`,
           "@keyframes scroll": {
-            to: {
-              transform: "translate(calc(-50% - 0.5rem))",
-            },
+            from: { transform: "translateX(0)" },
+            to: { transform: "translateX(-50%)" },
           },
         }}
       >
         {logos.map((logo, index) => (
-          <Box key={index} width="100px" height="100px">
+          <Box
+            key={index}
+            width="100px"
+            height="100px"
+            flexShrink={0}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            marginRight="1rem"
+          >
             {logo}
           </Box>
         ))}
