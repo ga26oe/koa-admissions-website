@@ -43,7 +43,7 @@ const LogoScroll: React.FC<LogoScrollProps> = ({
       data-direction={direction}
       data-speed={speed}
       css={{
-        width: "60%",
+        width: "65%",
         margin: "0 auto",
         overflow: "hidden",
         position: "relative",
@@ -56,7 +56,7 @@ const LogoScroll: React.FC<LogoScrollProps> = ({
         flexWrap="nowrap"
         position="relative"
         css={{
-          animation: `scroll ${40 * speedMultiplier}s linear infinite ${
+          animation: `scroll ${30 * speedMultiplier}s linear infinite ${
             direction === "right" ? "reverse" : ""
           }`,
           "@keyframes scroll": {
@@ -68,13 +68,13 @@ const LogoScroll: React.FC<LogoScrollProps> = ({
         {logos.map((logo, index) => (
           <Box
             key={index}
-            width="100px"
-            height="100px"
+            width="120px"
+            height="120px"
             flexShrink={0}
             display="flex"
             alignItems="center"
             justifyContent="center"
-            marginRight="1rem"
+            marginRight="4rem"
           >
             {logo}
           </Box>

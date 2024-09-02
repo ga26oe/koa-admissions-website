@@ -26,6 +26,7 @@ export default function RootLayout({
           <NavBar></NavBar>
 
           {children}
+          <Footer></Footer>
         </ChakraProvider>
       </body>
     </html>
