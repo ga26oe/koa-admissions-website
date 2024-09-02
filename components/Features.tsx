@@ -1,56 +1,64 @@
 "use client";
-
 import {
   Box,
-  chakra,
+  Container,
+  Heading,
   SimpleGrid,
-  Stat,
-  StatLabel,
-  StatNumber,
-  useColorModeValue,
+  Icon,
+  Text,
+  Stack,
+  HStack,
+  VStack,
 } from "@chakra-ui/react";
+import { CheckIcon } from "@chakra-ui/icons";
 
-interface StatsCardProps {
-  title: string;
-  stat: string;
-}
-function StatsCard(props: StatsCardProps) {
-  const { title, stat } = props;
-  return (
-    <Stat
-      px={{ base: 4, md: 8 }}
-      py={"5"}
-      shadow={"xl"}
-      border={"1px solid"}
-      borderColor={useColorModeValue("gray.800", "gray.500")}
-      rounded={"lg"}
-    >
-      <StatLabel fontWeight={"medium"} isTruncated>
-        {title}
-      </StatLabel>
-      <StatNumber fontSize={"2xl"} fontWeight={"medium"}>
-        {stat}
-      </StatNumber>
-    </Stat>
-  );
-}
+const features = [
+  {
+    id: 1,
+    title: "Personalized Guidance",
+    text: "Tailored strategies that align with your unique strengths and aspirations, ensuring a standout application.",
+  },
+  {
+    id: 2,
+    title: "Insider Insights",
+    text: "Benefit from our team's recent success in navigating the competitive admissions process at top universities.",
+  },
+  {
+    id: 3,
+    title: "Holistic Approach",
+    text: "We focus on developing well-rounded profiles, balancing academics, extracurriculars, and personal growth.",
+  },
+  {
+    id: 4,
+    title: "Ongoing Support",
+    text: "From initial planning to final decisions, we're with you every step of the way, providing consistent guidance and encouragement.",
+  },
+];
 
-export default function BasicStatistics() {
+export default function FeatureSection() {
   return (
-    <Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
-      <chakra.h1
-        textAlign={"center"}
-        fontSize={"4xl"}
-        py={10}
-        fontWeight={"bold"}
-      >
-        What is our company doing?
-      </chakra.h1>
-      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-        <StatsCard title={"We serve"} stat={"50,000 people"} />
-        <StatsCard title={"In"} stat={"30 different countries"} />
-        <StatsCard title={"Who speak"} stat={"100 different languages"} />
-      </SimpleGrid>
+    <Box p={4}>
+      <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
+        <Heading fontSize={"3xl"}>
+          Unlock Your Potential: Expert College Consulting for Top-Choice
+          Admissions
+        </Heading>
+      </Stack>
+      <Container maxW={"6xl"} mt={10}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+          {features.map((feature) => (
+            <HStack key={feature.id} align={"top"}>
+              <Box color={"green.400"} px={2}>
+                <Icon as={CheckIcon} />
+              </Box>
+              <VStack align={"start"}>
+                <Text fontWeight={600}>{feature.title}</Text>
+                <Text color={"gray.600"}>{feature.text}</Text>
+              </VStack>
+            </HStack>
+          ))}
+        </SimpleGrid>
+      </Container>
     </Box>
   );
 }

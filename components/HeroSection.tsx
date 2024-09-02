@@ -51,16 +51,7 @@ const HeroSection: React.FC = () => {
               Top University Choices
             </Text>
           </Heading>
-          {/*           <Text
-            fontSize={{ base: "xl", md: "2xl" }}
-            color="gray.500"
-            maxW="4xl"
-          >
-            Using a proven set of systems, we help 8th - 12th graders get into
-            their top choice universities. Through a specialized 1on1 approach
-            to academic, extracurricular, and professional development,
-            well-roundedness is the core of our work.
-          </Text> */}
+          {}
         </VStack>
         <Box width="full" overflow="hidden" py={4}>
           <LogoScroll logos={logos} direction="left" speed="normal" />
