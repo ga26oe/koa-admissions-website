@@ -11,7 +11,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
-
 const features = [
   {
     id: 1,
@@ -40,8 +39,7 @@ export default function FeatureSection() {
     <Box p={4}>
       <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
         <Heading fontSize={"3xl"}>
-          Unlock Your Potential: Expert College Consulting for Top-Choice
-          Admissions
+          Expert College Consulting for Top-Choice Admissions
         </Heading>
       </Stack>
       <Container maxW={"6xl"} mt={10}>

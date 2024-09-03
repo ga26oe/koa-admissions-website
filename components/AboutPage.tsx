@@ -1,28 +1,34 @@
 "use client";
 import React, { useState } from "react";
 import {
+  Box,
+  VStack,
+  Button,
   Flex,
+  Divider,
+  chakra,
+  Grid,
+  GridItem,
   Container,
   Heading,
   Stack,
   Text,
-  Button,
-  Box,
   Image,
   SimpleGrid,
   useColorModeValue,
-  keyframes,
+  UnorderedList,
+  ListItem,
 } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronRightIcon } from "@chakra-ui/icons";
 
-// Define the type for a team member
+// Team Member interface and data (as before)
 interface TeamMember {
   name: string;
   role: string;
   image: string;
 }
 
-// Team member data (replace with your actual team data)
 const teamMembers: TeamMember[] = [
   {
     name: "Keletso Rosenberg",
@@ -41,10 +47,38 @@ const teamMembers: TeamMember[] = [
   },
 ];
 
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-`;
+// Feature interface
+interface FeatureProps {
+  heading: string;
+  points: string[];
+}
+
+const Feature = ({ heading, points }: FeatureProps) => {
+  return (
+    <GridItem>
+      <VStack align="center" spacing={4} mb={6}>
+        <chakra.h3
+          fontSize="xl"
+          fontWeight="600"
+          textAlign="center"
+          color="blue.600"
+        >
+          {heading}
+        </chakra.h3>
+      </VStack>
+      <VStack align="stretch" spacing={4}>
+        {points.map((point, index) => (
+          <Flex key={index} align="flex-start">
+            <Box flexShrink={0} mt={0.1} mr={2}>
+              <ChevronRightIcon color="blue.700" boxSize={7} />
+            </Box>
+            <Text dangerouslySetInnerHTML={{ __html: point }} />
+          </Flex>
+        ))}
+      </VStack>
+    </GridItem>
+  );
+};
 
 const MotionBox = motion(Box);
 
@@ -63,7 +97,7 @@ const TeamMemberCard: React.FC<TeamMember> = ({ name, role, image }) => (
     exit={{ opacity: 0, y: 20 }}
     transition={{ duration: 0.5 }}
   >
-    <Box h={"350px"} bg={"gray.100"} mt={-6} mx={-6} mb={6} pos={"relative"}>
+    <Box h={"340px"} bg={"gray.100"} mt={-6} mx={-6} mb={6} pos={"relative"}>
       <Image
         src={image}
         alt={`Picture of ${name}`}
@@ -81,11 +115,12 @@ const TeamMemberCard: React.FC<TeamMember> = ({ name, role, image }) => (
   </MotionBox>
 );
 
-export default function CallToActionWithTeam() {
+export default function CallToActionWithTeamAndFeatures() {
   const [showTeam, setShowTeam] = useState(false);
+  const [showFeatures, setShowFeatures] = useState(false);
 
   return (
-    <Container maxW={"5xl"}>
+    <Container maxW={"7xl"}>
       <Stack
         textAlign={"center"}
         align={"center"}
@@ -118,15 +153,20 @@ export default function CallToActionWithTeam() {
           >
             Get started
           </Button>
-          <Button rounded={"full"} px={6}>
-            Learn more
-          </Button>
+
           <Button
             rounded={"full"}
             px={6}
             onClick={() => setShowTeam(!showTeam)}
           >
             {showTeam ? "Hide Team" : "Our Team"}
+          </Button>
+          <Button
+            rounded={"full"}
+            px={6}
+            onClick={() => setShowFeatures(!showFeatures)}
+          >
+            {showFeatures ? "Hide Details" : "Learn more"}
           </Button>
         </Stack>
 
@@ -145,6 +185,78 @@ export default function CallToActionWithTeam() {
                   <TeamMemberCard key={index} {...member} />
                 ))}
               </SimpleGrid>
+            </MotionBox>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {showFeatures && (
+            <MotionBox
+              as={Container}
+              maxW="7xl"
+              mt={14}
+              p={4}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Grid
+                templateColumns={{
+                  base: "repeat(1, 1fr)",
+                  sm: "repeat(2, 1fr)",
+                  md: "repeat(2, 1fr)",
+                }}
+                gap={4}
+              >
+                <GridItem colSpan={2}>
+                  <VStack alignItems="center" spacing="px">
+                    <chakra.h2 fontSize="3xl" fontWeight="700" color="blue.400">
+                      Our Approach Focuses on One on One Mentoring
+                    </chakra.h2>
+                  </VStack>
+                </GridItem>
+                <GridItem></GridItem>
+              </Grid>
+              <Divider mt={12} mb={12} />
+              <Grid
+                templateColumns={{
+                  base: "repeat(1, 1fr)",
+                  sm: "repeat(2, 1fr)",
+                  md: "repeat(4, 1fr)",
+                }}
+                gap={{ base: "8", sm: "12", md: "16" }}
+              >
+                <Feature
+                  heading={"Personalized Strategy"}
+                  points={[
+                    "Tailored approach for <strong>each student</strong>",
+                    "Focus on <strong>individual strengths</strong> and weaknesses",
+                  ]}
+                />
+                <Feature
+                  heading={"Expert Guidance"}
+                  points={[
+                    "Learn from advisors with <strong>firsthand experience</strong>",
+                    "Prepare for <strong>college interviews</strong>",
+                  ]}
+                />
+                <Feature
+                  heading={"Comprehensive Support"}
+                  points={[
+                    "<strong>Essay brainstorming</strong>, editing, and revision",
+                    "<strong>Extracurricular activity</strong> planning",
+                    "<strong>Test prep</strong> recommendations",
+                  ]}
+                />
+                <Feature
+                  heading={"Proven Results"}
+                  points={[
+                    "<strong>High acceptance rates</strong> to top universities",
+                    "Increased <strong>scholarship opportunities</strong>",
+                  ]}
+                />
+              </Grid>
             </MotionBox>
           )}
         </AnimatePresence>
