@@ -17,31 +17,37 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import Link from "next/link";
 
 interface Props {
   children: React.ReactNode;
+  href: string;
 }
 
-const Links = ["Home", "About", "Results"];
+const Links = [
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about" },
+  { name: "Results", path: "/results" },
+];
 
 const NavLink = (props: Props) => {
-  const { children } = props;
+  const { children, href } = props;
   return (
-    <Box
-      as="a"
-      px={2}
-      py={1}
-      rounded={"md"}
-      _hover={{
-        textDecoration: "none",
-        bg: useColorModeValue("gray.200", "gray.700"),
-      }}
-      href={"#"}
-    >
-      {children}
-    </Box>
+    <Link href={href} passHref>
+      <Box
+        as="a"
+        px={2}
+        py={1}
+        rounded={"md"}
+        _hover={{
+          textDecoration: "none",
+          bg: useColorModeValue("gray.200", "gray.700"),
+        }}
+      >
+        {children}
+      </Box>
+    </Link>
   );
 };
 
@@ -56,7 +62,6 @@ export default function NavBar() {
           <Box flexBasis="200px">
             <Text fontWeight="bold">KOA Admissions</Text>
           </Box>
-
           <Flex
             justify="center"
             flex={1}
@@ -64,11 +69,12 @@ export default function NavBar() {
           >
             <HStack as={"nav"} spacing={8}>
               {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLink key={link.name} href={link.path}>
+                  {link.name}
+                </NavLink>
               ))}
             </HStack>
           </Flex>
-
           <Flex
             alignItems={"center"}
             gap="0.5rem"
@@ -98,17 +104,17 @@ export default function NavBar() {
           </Flex>
         </Flex>
       </Box>
-
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>Menu</DrawerHeader>
-
           <DrawerBody>
             <Stack as={"nav"} spacing={4}>
               {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLink key={link.name} href={link.path}>
+                  {link.name}
+                </NavLink>
               ))}
               <Button colorScheme="blue" size="sm">
                 Book a Call
