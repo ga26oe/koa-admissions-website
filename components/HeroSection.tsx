@@ -48,7 +48,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onLearnMore }) => {
   ));
 
   return (
-    <Flex direction="column" height="100%" justify="space-around">
+    <Flex direction="column" height="100%" justify="space-between">
       <Container
         maxW="container.xl"
         flex="1"
