@@ -32,6 +32,37 @@ const features = [
     title: "Ongoing Support",
     text: "From initial planning to final decisions, we're with you every step of the way, providing consistent guidance and encouragement.",
   },
+
+  {
+    id: 5,
+    title: "Essay Excellence",
+    text: "Expert guidance on crafting compelling personal statements and supplemental essays that showcase your unique voice and experiences.",
+  },
+  {
+    id: 6,
+    title: "Interview Preparation",
+    text: "Comprehensive coaching to help you ace admissions interviews with confidence and authenticity.",
+  },
+  {
+    id: 7,
+    title: "Financial Aid Navigation",
+    text: "Assistance in understanding and maximizing financial aid opportunities, including scholarships and grants.",
+  },
+  {
+    id: 8,
+    title: "Timeline Management",
+    text: "Strategic planning to keep you on track with application deadlines, standardized tests, and other crucial milestones.",
+  },
+  {
+    id: 9,
+    title: "Test Prep Strategies",
+    text: "Customized advice on standardized test preparation, including which tests to take and how to improve your scores effectively.",
+  },
+  {
+    id: 10,
+    title: "Extracurricular Optimization",
+    text: "Guidance on selecting and developing meaningful extracurricular activities that align with your passions and strengthen your application.",
+  },
 ];
 
 export default function FeatureSection() {

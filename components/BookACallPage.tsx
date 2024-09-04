@@ -2,165 +2,163 @@
 
 import { useState } from "react";
 import {
-  Progress,
   Box,
-  ButtonGroup,
   Button,
-  Heading,
   Flex,
   FormControl,
-  GridItem,
   FormLabel,
+  Heading,
   Input,
-  Select,
-  SimpleGrid,
-  InputLeftAddon,
-  InputGroup,
-  Textarea,
-  FormHelperText,
-  InputRightElement,
+  Text,
+  VStack,
+  useToast,
+  Container,
+  Stack,
+  useColorModeValue,
+  Circle,
+  Icon,
 } from "@chakra-ui/react";
-
-import { useToast } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import { ChevronRightIcon } from "@chakra-ui/icons";
+import { Calendar, User, Mail } from "lucide-react";
 import CalendlyEmbed from "./CalendlyEmbed";
+import { IconType } from "react-icons";
 
-const Form1 = () => {
-  const [show, setShow] = useState(false);
-  const handleClick = () => setShow(!show);
-  return (
-    <>
-      <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
-        Show Your Interest
-      </Heading>
-      <Flex>
-        <FormControl mr="5%">
-          <FormLabel htmlFor="first-name" fontWeight={"normal"}>
-            First name
-          </FormLabel>
-          <Input id="first-name" placeholder="First name" />
-        </FormControl>
+const MotionBox = motion(Box);
 
-        <FormControl>
-          <FormLabel htmlFor="last-name" fontWeight={"normal"}>
-            Last name
-          </FormLabel>
-          <Input id="last-name" placeholder="First name" />
-        </FormControl>
-      </Flex>
-      <FormControl mt="2%">
-        <FormLabel htmlFor="email" fontWeight={"normal"}>
-          Email address
-        </FormLabel>
-        <Input id="email" type="email" />
-        <FormHelperText>We&apos;ll never share your email.</FormHelperText>
-      </FormControl>
-    </>
-  );
-};
+const Form1 = () => (
+  <VStack spacing={6} align="stretch">
+    <FormControl>
+      <FormLabel htmlFor="first-name">First name</FormLabel>
+      <Input id="first-name" placeholder="Enter your first name" size="lg" />
+    </FormControl>
+    <FormControl>
+      <FormLabel htmlFor="last-name">Last name</FormLabel>
+      <Input id="last-name" placeholder="Enter your last name" size="lg" />
+    </FormControl>
+    <FormControl>
+      <FormLabel htmlFor="email">Email address</FormLabel>
+      <Input id="email" type="email" placeholder="you@example.com" size="lg" />
+    </FormControl>
+  </VStack>
+);
 
-const Form2 = () => {
-  return (
-    <Box width="60%" p={8}>
-      <div>
-        <h1>
-          While you're here, schedule an initial consultation. It's not required
-          but highly encouraged. We are exited to meet you face to face
-        </h1>
-        <CalendlyEmbed url="https://calendly.com/gajai-avinash/15-min-admissions-consultation-1" />
-      </div>
+const Form2 = () => (
+  <VStack spacing={6} align="stretch">
+    <Text fontSize="lg" fontWeight="medium">
+      Choose a time that works best for you. We're excited to meet!
+    </Text>
+    <Box borderRadius="lg" overflow="hidden" boxShadow="md">
+      <CalendlyEmbed url="https://calendly.com/gajai-avinash/15-min-admissions-consultation-1" />
     </Box>
-  );
-};
+  </VStack>
+);
 
-const Form3 = () => {
-  return (
-    <>
-      <h1>
-        Thank you. Once you submit, we will get back to you with further details
-      </h1>
-    </>
-  );
-};
+const Form3 = () => (
+  <VStack spacing={6} align="center">
+    <Icon as={Calendar} w={12} h={12} color="teal.500" />
+    <Heading as="h2" size="xl" textAlign="center">
+      Thank You!
+    </Heading>
+    <Text fontSize="lg" textAlign="center">
+      We've received your information and will be in touch soon with more
+      details about your consultation.
+    </Text>
+  </VStack>
+);
 
-export default function Multistep() {
+interface StepIconProps {
+  icon: IconType;
+  isActive: boolean;
+}
+
+const StepIcon: React.FC<StepIconProps> = ({ icon, isActive }) => (
+  <Circle
+    size="40px"
+    bg={isActive ? "teal.500" : "gray.200"}
+    color={isActive ? "white" : "gray.500"}
+  >
+    <Icon as={icon} w={5} h={5} />
+  </Circle>
+);
+
+export default function BookACallPage() {
   const toast = useToast();
   const [step, setStep] = useState(1);
-  const [progress, setProgress] = useState(33.33);
+  const bgColor = useColorModeValue("gray.50", "gray.800");
+  const textColor = useColorModeValue("gray.800", "white");
+
+  const nextStep = () => setStep(step + 1);
+  const prevStep = () => setStep(step - 1);
+
+  const handleSubmit = () => {
+    toast({
+      title: "Consultation Scheduled",
+      description: "We look forward to speaking with you soon!",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
+  };
 
   return (
-    <>
-      <Box
-        borderWidth="1px"
-        rounded="lg"
-        shadow="1px 1px 3px rgba(0,0,0,0.3)"
-        maxWidth={800}
-        p={6}
-        m="10px auto"
-        as="form"
-      >
-        <Progress
-          hasStripe
-          value={progress}
-          mb="5%"
-          mx="5%"
-          isAnimated
-        ></Progress>
-        {step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
-        <ButtonGroup mt="5%" w="100%">
-          <Flex w="100%" justifyContent="space-between">
-            <Flex>
-              <Button
-                onClick={() => {
-                  setStep(step - 1);
-                  setProgress(progress - 33.33);
-                }}
-                isDisabled={step === 1}
-                colorScheme="teal"
-                variant="solid"
-                w="7rem"
-                mr="5%"
+    <Box minHeight="100vh" bg={bgColor} py={16}>
+      <Container maxW="3xl">
+        <MotionBox
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <VStack spacing={8} align="stretch">
+            <Heading as="h1" size="2xl" textAlign="center" color={textColor}>
+              Book Your Free Consultation
+            </Heading>
+
+            <Box
+              bg={useColorModeValue("white", "gray.700")}
+              p={8}
+              borderRadius="lg"
+              boxShadow="xl"
+            >
+              <MotionBox
+                key={step}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
               >
-                Back
-              </Button>
-              <Button
-                w="7rem"
-                isDisabled={step === 3}
-                onClick={() => {
-                  setStep(step + 1);
-                  if (step === 3) {
-                    setProgress(100);
-                  } else {
-                    setProgress(progress + 33.33);
-                  }
-                }}
-                colorScheme="teal"
-                variant="outline"
-              >
-                Next
-              </Button>
+                {step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
+              </MotionBox>
+            </Box>
+            <Flex justify="space-between">
+              {step > 1 && (
+                <Button onClick={prevStep} variant="ghost" size="lg">
+                  Back
+                </Button>
+              )}
+              {step < 3 ? (
+                <Button
+                  onClick={nextStep}
+                  colorScheme="teal"
+                  rightIcon={<ChevronRightIcon />}
+                  ml="auto"
+                  size="lg"
+                >
+                  {step === 1 ? "Choose Time" : "Confirm"}
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleSubmit}
+                  colorScheme="teal"
+                  size="lg"
+                  ml="auto"
+                >
+                  Finish
+                </Button>
+              )}
             </Flex>
-            {step === 3 ? (
-              <Button
-                w="7rem"
-                colorScheme="red"
-                variant="solid"
-                onClick={() => {
-                  toast({
-                    title: "Your Interest Has Been Notified.",
-                    description:
-                      "Check your inbox in the coming weeks for a friendly email",
-                    status: "success",
-                    duration: 3000,
-                    isClosable: true,
-                  });
-                }}
-              >
-                Submit
-              </Button>
-            ) : null}
-          </Flex>
-        </ButtonGroup>
-      </Box>
-    </>
+          </VStack>
+        </MotionBox>
+      </Container>
+    </Box>
   );
 }
