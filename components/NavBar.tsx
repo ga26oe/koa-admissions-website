@@ -81,13 +81,21 @@ export default function NavBar() {
             flexBasis="200px"
             justify="flex-end"
           >
-            <Button
-              colorScheme="blue"
-              size="sm"
-              display={{ base: "none", md: "inline-flex" }}
-            >
-              Book a Call
-            </Button>
+            <Link href="/bookaCall" passHref>
+              <Button
+                as="a"
+                display={{ base: "none", md: "inline-flex" }}
+                fontSize={"sm"}
+                fontWeight={600}
+                color={"white"}
+                bg={"blue.400"}
+                _hover={{
+                  bg: "blue.300",
+                }}
+              >
+                Book a Call
+              </Button>
+            </Link>
             <IconButton
               size="sm"
               onClick={toggleColorMode}
@@ -104,6 +112,8 @@ export default function NavBar() {
           </Flex>
         </Flex>
       </Box>
+
+      {/* code for drawer for mobile devices */}
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
@@ -116,9 +126,14 @@ export default function NavBar() {
                   {link.name}
                 </NavLink>
               ))}
-              <Button colorScheme="blue" size="sm">
-                Book a Call
-              </Button>
+
+              {
+                <link href="./bookaCall">
+                  <Button colorScheme="blue" size="sm">
+                    Book a Call
+                  </Button>
+                </link>
+              }
             </Stack>
           </DrawerBody>
         </DrawerContent>
