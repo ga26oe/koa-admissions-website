@@ -56,6 +56,7 @@ const Feature: React.FC<FeatureProps> = ({ title, text, icon }) => {
 const AboutPage: React.FC = () => {
   const bgColor = useColorModeValue("gray.50", "gray.900");
   const textColor = useColorModeValue("gray.600", "gray.400");
+  const headingColor = useColorModeValue("gray.800", "white");
 
   const features: FeatureProps[] = [
     {
@@ -83,23 +84,22 @@ const AboutPage: React.FC = () => {
   return (
     <Box bg={bgColor} py={20}>
       <Container maxW={"7xl"}>
-        <VStack spacing={12}>
+        <VStack spacing={16}>
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             <Heading
-              fontWeight={600}
-              fontSize={{ base: "3xl", sm: "4xl", md: "5xl" }}
+              fontWeight={800}
+              fontSize={{ base: "4xl", sm: "5xl", md: "6xl" }}
               lineHeight={"110%"}
               textAlign="center"
               mb={6}
+              bgGradient="linear(to-r, blue.400, purple.500)"
+              bgClip="text"
             >
-              About{" "}
-              <Text as={"span"} color={"blue.400"}>
-                KOA Admissions
-              </Text>
+              About KOA Admissions
             </Heading>
             <Text
               color={textColor}
@@ -108,10 +108,7 @@ const AboutPage: React.FC = () => {
               maxW={"3xl"}
               mx="auto"
             >
-              We are a team of dedicated professionals committed to helping
-              students achieve their dreams of attending top universities. Our
-              personalized approach and deep understanding of the admissions
-              process set us apart.
+              Empowering dreams, shaping futures
             </Text>
           </MotionBox>
 
@@ -134,21 +131,39 @@ const AboutPage: React.FC = () => {
           >
             <Box
               bg={useColorModeValue("white", "gray.800")}
-              p={8}
-              rounded={"xl"}
-              shadow={"lg"}
-              maxW={"3xl"}
+              p={10}
+              rounded={"2xl"}
+              shadow={"2xl"}
+              maxW={"4xl"}
               mx="auto"
+              position="relative"
+              _before={{
+                content: '""',
+                position: "absolute",
+                top: "-15px",
+                left: "-15px",
+                right: "-15px",
+                bottom: "-15px",
+                bg: "blue.400",
+                filter: "blur(20px)",
+                opacity: 0.15,
+                zIndex: -1,
+                borderRadius: "2xl",
+              }}
             >
-              <Text fontSize={"lg"} mb={4}>
-                At KOA Admissions, we believe that every student has the
-                potential to excel. Our mission is to unlock that potential and
-                guide students towards their academic and career goals. We
-                combine our expertise, personalized strategies, and unwavering
-                support to help you navigate the complex world of college
-                admissions.
+              <Text
+                fontSize={"lg"}
+                mb={6}
+                color={headingColor}
+                lineHeight={1.8}
+              >
+                We are a team of dedicated professionals committed to helping
+                students achieve their dreams of attending top universities. Our
+                personalized approach, similar background, and deep
+                understanding of the admissions process set us apart. We went
+                through the process not so long ago!
               </Text>
-              <Text fontSize={"lg"}>
+              <Text fontSize={"lg"} color={headingColor} lineHeight={1.8}>
                 Whether you're aiming for Ivy League schools or other top-tier
                 universities, we're here to support you every step of the way.
                 Let's work together to turn your dreams into reality.

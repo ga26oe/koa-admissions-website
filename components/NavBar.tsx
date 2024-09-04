@@ -128,7 +128,7 @@ export default function NavBar() {
               ))}
 
               {
-                <link href="./bookaCall">
+                <link href="./bookACall">
                   <Button colorScheme="blue" size="sm">
                     Book a Call
                   </Button>

@@ -14,6 +14,7 @@ import HeroSection from "@/components/HeroSection";
 import Features from "@/components/Features";
 import AboutPage from "@/components/AboutPage";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import { FaArrowRight } from "react-icons/fa";
 
 const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
@@ -32,10 +33,18 @@ export default function Home() {
     "linear(to-b, purple.900, pink.900)"
   );
   const textColor = useColorModeValue("gray.800", "gray.100");
+  const buttonBgColor = useColorModeValue("blue.400", "blue.200");
+  const buttonTextColor = useColorModeValue("white", "gray.800");
+  const bgColor = useColorModeValue("blue.50", "blue.900");
 
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
-    section?.scrollIntoView({ behavior: "smooth" });
+    if (section) {
+      const yOffset = -25; // Adjust this value to fine-tune the scroll position
+      const y =
+        section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
   };
 
   return (
@@ -44,11 +53,17 @@ export default function Home() {
         <HeroSection onLearnMore={() => scrollToSection("features")} />
       </Box>
 
-      <Box bgGradient={bgGradient2} minHeight="100vh" py={20}>
+      <Box
+        id="features"
+        bgGradient={bgGradient2}
+        minHeight="100vh"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
         <Container maxW="container.xl">
           <VStack spacing={16} align="stretch">
             <MotionBox
-              id="features"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
@@ -76,11 +91,10 @@ export default function Home() {
         </Container>
       </Box>
 
-      <Box bgGradient={bgGradient3} minHeight="100vh" py={20}>
+      <Box id="about" bgGradient={bgGradient3} minHeight="100vh" py={20}>
         <Container maxW="container.xl">
           <VStack spacing={16} align="stretch">
             <MotionBox
-              id="about"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
@@ -92,26 +106,65 @@ export default function Home() {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
+              bg={bgColor}
+              py={20}
+              px={4}
             >
-              <VStack spacing={8} textAlign="center" py={16}>
-                <Heading as="h2" size="2xl" color={textColor}>
-                  Ready to Start Your Journey?
-                </Heading>
-                <Text fontSize="xl" color={textColor}>
-                  Take the first step towards your dream university with
-                  personalized guidance.
-                </Text>
-                <Button
-                  as="a"
-                  href="/bookaCall"
-                  size="lg"
-                  colorScheme="blue"
-                  px={8}
-                  fontWeight="bold"
-                >
-                  Book Your Free Consultation
-                </Button>
-              </VStack>
+              <Box
+                maxW="4xl"
+                mx="auto"
+                bg={useColorModeValue("white", "gray.800")}
+                rounded="2xl"
+                shadow="xl"
+                overflow="hidden"
+              >
+                <VStack spacing={8} textAlign="center" py={16} px={8}>
+                  <Heading
+                    as="h2"
+                    fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
+                    fontWeight="bold"
+                    color={textColor}
+                    lineHeight="shorter"
+                  >
+                    Ready to Start Your
+                    <Box
+                      as="span"
+                      bgGradient="linear(to-r, blue.400, purple.500)"
+                      bgClip="text"
+                    >
+                      {" College Application "}
+                    </Box>
+                    With Us?
+                  </Heading>
+                  <Text
+                    fontSize={{ base: "lg", md: "xl" }}
+                    color={textColor}
+                    maxW="2xl"
+                  >
+                    Take the first step towards attending your dream university
+                    with our personalized guidance. Let's make your aspirations
+                    a reality.
+                  </Text>
+                  <Button
+                    as="a"
+                    href="/bookaCall"
+                    size="lg"
+                    bg={buttonBgColor}
+                    color={buttonTextColor}
+                    px={8}
+                    py={6}
+                    fontWeight="bold"
+                    rounded="full"
+                    _hover={{
+                      transform: "translateY(-2px)",
+                      boxShadow: "lg",
+                    }}
+                    rightIcon={<FaArrowRight />}
+                  >
+                    Book an Initial Call
+                  </Button>
+                </VStack>
+              </Box>
             </MotionBox>
           </VStack>
         </Container>
