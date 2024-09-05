@@ -36,9 +36,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onLearnMore }) => {
       as="img"
       src={file}
       alt={`University logo ${index + 1}`}
-      width="100px"
-      height="100px"
+      width="120px"
+      height="120px"
       objectFit="contain"
+      mx={4}
       onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
         const target = e.target as HTMLImageElement;
         target.onerror = null;
@@ -48,14 +49,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onLearnMore }) => {
   ));
 
   return (
-    <Flex direction="column" height="100%" justify="space-between">
-      <Container
-        maxW="container.xl"
-        flex="1"
-        display="flex"
-        alignItems="center"
-      >
-        <VStack spacing={8} align="flex-start" width="100%">
+    <Flex direction="column" minHeight="100vh" justify="center">
+      <Container maxW="container.xl" py={16}>
+        <VStack spacing={12} align="stretch" width="100%">
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -63,47 +59,69 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onLearnMore }) => {
           >
             <Heading
               fontWeight={700}
-              fontSize={{ base: "4xl", sm: "5xl", md: "6xl" }}
+              fontSize={{ base: "5xl", sm: "6xl", md: "7xl" }}
               lineHeight="110%"
             >
               Get Into Your <br />
-              <Text as="span" color="blue.400">
+              <Text as="span" color="blue.400" mt={4} display="inline-block">
                 Top University Choices
               </Text>
             </Heading>
           </MotionBox>
+
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
+            <Box
+              width="100vw"
+              position="relative"
+              left="50%"
+              right="50%"
+              marginLeft="-50vw"
+              marginRight="-50vw"
+              overflow="hidden"
+              py={6}
+            >
+              <LogoScroll logos={logos} direction="left" speed="normal" />
+            </Box>
+          </MotionBox>
+
+          <MotionBox
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
             <Text
-              fontSize="xl"
+              fontSize="2xl"
               color={useColorModeValue("gray.600", "gray.300")}
+              maxWidth="80%"
             >
               Expert guidance to navigate the competitive admissions process and
               secure your place at prestigious institutions.
             </Text>
           </MotionBox>
+
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
           >
             <Button
               rightIcon={<ChevronDownIcon />}
               colorScheme="blue"
               size="lg"
               onClick={onLearnMore}
+              px={8}
+              py={6}
+              fontSize="xl"
             >
               Learn More
             </Button>
           </MotionBox>
         </VStack>
       </Container>
-      <Box width="full" overflow="hidden" py={12}>
-        <LogoScroll logos={logos} direction="left" speed="normal" />
-      </Box>
     </Flex>
   );
 };

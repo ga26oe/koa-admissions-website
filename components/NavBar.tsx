@@ -27,7 +27,7 @@ interface Props {
 
 const Links = [
   { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
+  { name: "Our Team", path: "/myTeam" },
   { name: "Results", path: "/results" },
 ];
 
