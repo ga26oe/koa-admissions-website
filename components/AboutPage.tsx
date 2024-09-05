@@ -28,6 +28,10 @@ interface FeatureProps {
 }
 
 const Feature: React.FC<FeatureProps> = ({ title, text, icon }) => {
+  const iconBgColor = useColorModeValue("blue.400", "blue.200");
+  const iconColor = useColorModeValue("white", "gray.800");
+  const titleColor = useColorModeValue("gray.800", "white");
+
   return (
     <VStack>
       <Flex
@@ -35,16 +39,18 @@ const Feature: React.FC<FeatureProps> = ({ title, text, icon }) => {
         h={16}
         align={"center"}
         justify={"center"}
-        color={"white"}
+        color={iconColor}
         rounded={"full"}
-        bg={"blue.400"}
+        bg={iconBgColor}
         mb={1}
       >
         {icon}
       </Flex>
-      <Text fontWeight={600}>{title}</Text>
+      <Text fontWeight={600} color={titleColor}>
+        {title}
+      </Text>
       <Text
-        color={useColorModeValue("gray.600", "gray.400")}
+        color={useColorModeValue("gray.600", "gray.300")}
         textAlign="center"
       >
         {text}
@@ -54,9 +60,16 @@ const Feature: React.FC<FeatureProps> = ({ title, text, icon }) => {
 };
 
 const AboutPage: React.FC = () => {
-  const bgColor = useColorModeValue("gray.50", "gray.900");
-  const textColor = useColorModeValue("gray.600", "gray.400");
+  const bgGradient = useColorModeValue(
+    "linear(to-b, purple.50, pink.50)",
+    "linear(to-b, gray.700, gray.600)"
+  );
+  const textColor = useColorModeValue("gray.600", "gray.300");
   const headingColor = useColorModeValue("gray.800", "white");
+  const containerBgColor = useColorModeValue(
+    "rgba(255, 255, 255, 0.8)",
+    "rgba(45, 55, 72, 0.3)"
+  );
 
   const features: FeatureProps[] = [
     {
@@ -82,7 +95,7 @@ const AboutPage: React.FC = () => {
   ];
 
   return (
-    <Box bg={bgColor} py={20}>
+    <Box bgGradient={bgGradient} py={20}>
       <Container maxW={"7xl"}>
         <VStack spacing={16}>
           <MotionBox
@@ -90,26 +103,32 @@ const AboutPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <Heading
-              fontWeight={800}
-              fontSize={{ base: "4xl", sm: "5xl", md: "6xl" }}
-              lineHeight={"110%"}
-              textAlign="center"
-              mb={6}
-              bgGradient="linear(to-r, blue.400, purple.500)"
-              bgClip="text"
+            <Box
+              bg={containerBgColor}
+              p={8}
+              rounded={"xl"}
+              backdropFilter="blur(10px)"
             >
-              About KOA Admissions
-            </Heading>
-            <Text
-              color={textColor}
-              fontSize={"xl"}
-              textAlign="center"
-              maxW={"3xl"}
-              mx="auto"
-            >
-              Empowering dreams, shaping futures
-            </Text>
+              <Heading
+                fontWeight={800}
+                fontSize={{ base: "4xl", sm: "5xl", md: "6xl" }}
+                lineHeight={"110%"}
+                textAlign="center"
+                mb={6}
+                color={headingColor}
+              >
+                About KOA Admissions
+              </Heading>
+              <Text
+                color={textColor}
+                fontSize={"xl"}
+                textAlign="center"
+                maxW={"3xl"}
+                mx="auto"
+              >
+                Empowering dreams, shaping futures
+              </Text>
+            </Box>
           </MotionBox>
 
           <MotionBox
@@ -130,26 +149,14 @@ const AboutPage: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <Box
-              bg={useColorModeValue("white", "gray.800")}
+              bg={containerBgColor}
               p={10}
-              rounded={"2xl"}
-              shadow={"2xl"}
+              rounded={"xl"}
+              shadow={"lg"}
               maxW={"4xl"}
               mx="auto"
               position="relative"
-              _before={{
-                content: '""',
-                position: "absolute",
-                top: "-15px",
-                left: "-15px",
-                right: "-15px",
-                bottom: "-15px",
-                bg: "blue.400",
-                filter: "blur(20px)",
-                opacity: 0.15,
-                zIndex: -1,
-                borderRadius: "2xl",
-              }}
+              backdropFilter="blur(10px)"
             >
               <Text
                 fontSize={"lg"}

@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Box,
   chakra,
@@ -45,11 +43,18 @@ const SocialButton = ({
 };
 
 export default function Footer() {
+  const bgColor = useColorModeValue(
+    "rgba(255, 255, 255, 0.8)",
+    "rgba(45, 55, 72, 0.3)"
+  );
+  const textColor = useColorModeValue("gray.700", "gray.200");
+
   return (
     <Box
-      bg={useColorModeValue("gray.50", "gray.900")}
-      color={useColorModeValue("gray.700", "gray.200")}
+      bg={bgColor}
+      color={textColor}
       width="100%"
+      backdropFilter="blur(10px)"
     >
       <Container
         as={Stack}
@@ -61,6 +66,17 @@ export default function Footer() {
         align={{ base: "center", md: "center" }}
       >
         <Text>© 2024 KOA Admissions. All rights reserved</Text>
+        <Stack direction={"row"} spacing={6}>
+          <SocialButton label={"Twitter"} href={"#"}>
+            <FaTwitter />
+          </SocialButton>
+          <SocialButton label={"YouTube"} href={"#"}>
+            <FaYoutube />
+          </SocialButton>
+          <SocialButton label={"Instagram"} href={"#"}>
+            <FaInstagram />
+          </SocialButton>
+        </Stack>
       </Container>
     </Box>
   );
