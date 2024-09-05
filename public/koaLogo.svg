@@ -1,0 +1,17 @@
+<svg width="250" height="100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Blue circle representing one-on-one connection -->
+  <circle cx="40" cy="50" r="20" fill="#268bd2" />
+  <circle cx="80" cy="50" r="20" fill="none" stroke="#000" stroke-width="2" />
+  
+  <!-- Line representing guidance and connection between the circles -->
+  <line x1="60" y1="50" x2="80" y2="50" stroke="#000" stroke-width="2" />
+  
+  <!-- Text for the company name -->
+  <text x="110" y="40" font-family="Arial, sans-serif" font-size="25" fill="#268bd2">
+    KOA
+  </text>
+  
+  <text x="110" y="70" font-family="Arial, sans-serif" font-size="15" fill="#555">
+    Admissions
+  </text>
+</svg>

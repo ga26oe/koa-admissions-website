@@ -86,7 +86,7 @@ const TeamMemberCard: React.FC<TeamMember> = ({
         bgGradient: "linear(to-r, blue.400, teal.500)",
       }}
     >
-      <Box h="250px" overflow="hidden">
+      <Box h="375px" overflow="hidden">
         <Image
           src={image}
           alt={name}
@@ -186,12 +186,12 @@ const MyTeamPage: React.FC = () => {
             </Circle>
           </Flex>
           <Heading fontSize="3xl" fontWeight="bold" mb={4}>
-            Let us Help Shape Your Future
+            For Students, By Students
           </Heading>
           <Text color={textColor} fontSize="lg" maxW="2xl" mx="auto">
-            Together, we're not just helping students get into college; we're
-            nurturing the leaders, innovators, and changemakers of tomorrow. Be
-            part of our mission to transform education and unlock potential.
+            Count on us, current students that have already been through the
+            process, and were once in your position not so long ago, to help
+            shape your future.
           </Text>
         </MotionBox>
       </Container>

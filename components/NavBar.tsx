@@ -16,6 +16,7 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Image,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import Link from "next/link";
@@ -60,7 +61,14 @@ export default function NavBar() {
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <Box flexBasis="200px">
-            <Text fontWeight="bold">KOA Admissions</Text>
+            <Link href="/" passHref>
+              <Image
+                src="/koaLogo.svg"
+                alt="KOA Admissions Logo"
+                height="55px"
+                width="auto"
+              />
+            </Link>
           </Box>
           <Flex
             justify="center"
@@ -126,14 +134,11 @@ export default function NavBar() {
                   {link.name}
                 </NavLink>
               ))}
-
-              {
-                <link href="./bookACall">
-                  <Button colorScheme="blue" size="sm">
-                    Book a Call
-                  </Button>
-                </link>
-              }
+              <Link href="/bookaCall" passHref>
+                <Button colorScheme="blue" size="sm" width="100%">
+                  Book a Call
+                </Button>
+              </Link>
             </Stack>
           </DrawerBody>
         </DrawerContent>
