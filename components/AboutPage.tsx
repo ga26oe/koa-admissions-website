@@ -67,8 +67,8 @@ const AboutPage: React.FC = () => {
   const textColor = useColorModeValue("gray.600", "gray.300");
   const headingColor = useColorModeValue("gray.800", "white");
   const containerBgColor = useColorModeValue(
-    "rgba(255, 255, 255, 0.8)",
-    "rgba(45, 55, 72, 0.3)"
+    "linear-gradient(rgba(255, 255, 255, 0.5), rgba(240, 240, 255, 0.5))",
+    "linear-gradient(rgba(55, 65, 80, 0.35), rgba(75, 85, 100, 0.35))"
   );
 
   const features: FeatureProps[] = [
@@ -104,10 +104,12 @@ const AboutPage: React.FC = () => {
             transition={{ duration: 0.8 }}
           >
             <Box
-              bg={containerBgColor}
+              bgImage={containerBgColor}
               p={8}
               rounded={"xl"}
               backdropFilter="blur(10px)"
+              borderWidth="1px"
+              borderColor={useColorModeValue("gray.200", "gray.700")}
             >
               <Heading
                 fontWeight={800}
@@ -149,7 +151,7 @@ const AboutPage: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <Box
-              bg={containerBgColor}
+              bgImage={containerBgColor}
               p={10}
               rounded={"xl"}
               shadow={"lg"}
@@ -157,6 +159,8 @@ const AboutPage: React.FC = () => {
               mx="auto"
               position="relative"
               backdropFilter="blur(10px)"
+              borderWidth="1px"
+              borderColor={useColorModeValue("gray.200", "gray.700")}
             >
               <Text
                 fontSize={"lg"}

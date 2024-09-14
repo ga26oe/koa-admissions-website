@@ -33,6 +33,8 @@ interface InputFieldProps {
   label: string;
   placeholder: string;
   type?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -40,6 +42,8 @@ const InputField: React.FC<InputFieldProps> = ({
   label,
   placeholder,
   type = "text",
+  value,
+  onChange,
 }) => {
   return (
     <FormControl>
@@ -55,7 +59,12 @@ const InputField: React.FC<InputFieldProps> = ({
             color={useColorModeValue("blue.500", "blue.200")}
           />
         </Circle>
-        <Input type={type} placeholder={placeholder} />
+        <Input
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+        />
       </Flex>
     </FormControl>
   );
@@ -64,23 +73,47 @@ const InputField: React.FC<InputFieldProps> = ({
 const BookACallPage: React.FC = () => {
   const [step, setStep] = useState<number>(1);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [date, setDate] = useState("");
   const toast = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulating form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setStep(2);
+    try {
+      const response = await fetch("/api/book-call", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, date }),
+      });
+
+      if (response.ok) {
+        setStep(2);
+        toast({
+          title: "Information Received",
+          description: "Please select a time slot in the calendar below.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else {
+        throw new Error("Failed to book call");
+      }
+    } catch (error) {
+      console.error("Error:", error);
       toast({
-        title: "Information Received",
-        description: "Please select a time slot in the calendar below.",
-        status: "success",
+        title: "Error",
+        description: "Failed to submit information. Please try again.",
+        status: "error",
         duration: 5000,
         isClosable: true,
       });
-    }, 2000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleAppointmentConfirmation = () => {
@@ -136,18 +169,24 @@ const BookACallPage: React.FC = () => {
                   icon={User}
                   label="Full Name"
                   placeholder="Enter your full name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
                 <InputField
                   icon={Mail}
                   label="Email Address"
                   placeholder="Enter your email"
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <InputField
                   icon={Calendar}
                   label="Preferred Date"
                   placeholder="Select a date"
                   type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
                 />
 
                 <Button
