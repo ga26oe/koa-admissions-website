@@ -104,7 +104,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
-              bgImage={containerBgColor}
+              bgImage={bgColor}
               py={20}
               px={4}
               borderRadius="lg"
@@ -114,7 +114,7 @@ export default function Home() {
                 maxW="4xl"
                 mx="auto"
                 bg={useColorModeValue(
-                  "rgba(255, 255, 255, 0.8)",
+                  "rgba(255, 255, 255, 0.2)",
                   "rgba(45, 55, 72, 0.8)"
                 )}
                 rounded="2xl"

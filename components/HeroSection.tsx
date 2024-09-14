@@ -22,7 +22,6 @@ interface HeroSectionProps {
 const HeroSection: React.FC<HeroSectionProps> = ({ onLearnMore }) => {
   const logoFiles = [
     "/universityLogos/Caltech_Logo.svg",
-    "/universityLogos/Cornell_University_logo.svg",
     "/universityLogos/Harvard_University_logo.svg",
     "/universityLogos/MIT_logo.svg",
     "/universityLogos/Princeton_text_logo.svg",
@@ -30,16 +29,22 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onLearnMore }) => {
     "/universityLogos/Stanford_wordmark_(2012).svg",
   ];
 
+  const logoShadow = useColorModeValue(
+    "none",
+    "0 0 8px rgba(255, 255, 255, 0.5)"
+  );
+
   const logos = logoFiles.map((file, index) => (
     <Box
       key={index}
       as="img"
       src={file}
       alt={`University logo ${index + 1}`}
-      width="120px"
-      height="120px"
+      width="100px"
+      height="100px"
       objectFit="contain"
-      mx={4}
+      filter={`drop-shadow(${logoShadow})`}
+      transition="filter 0.3s ease"
       onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
         const target = e.target as HTMLImageElement;
         target.onerror = null;
@@ -74,18 +79,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onLearnMore }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            <Box
-              width="100vw"
-              position="relative"
-              left="50%"
-              right="50%"
-              marginLeft="-50vw"
-              marginRight="-50vw"
-              overflow="hidden"
-              py={6}
-            >
-              <LogoScroll logos={logos} direction="left" speed="normal" />
-            </Box>
+            <LogoScroll logos={logos} direction="left" speed="normal" />
           </MotionBox>
 
           <MotionBox

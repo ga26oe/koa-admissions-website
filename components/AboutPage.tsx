@@ -74,7 +74,7 @@ const AboutPage: React.FC = () => {
   const features: FeatureProps[] = [
     {
       icon: <Icon as={FaGraduationCap} w={10} h={10} />,
-      title: "Expert Guidance",
+      title: "Top-Tier University Insights",
       text: "Our team consists of graduates from top universities who understand the intricacies of the admissions process.",
     },
     {

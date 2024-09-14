@@ -1,9 +1,9 @@
 "use client";
+
 import {
   Box,
   Flex,
   HStack,
-  Text,
   IconButton,
   Button,
   useDisclosure,
@@ -16,10 +16,10 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  Image,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import Link from "next/link";
+import KoaLogo from "@/public/koaLogo";
 
 interface Props {
   children: React.ReactNode;
@@ -60,14 +60,16 @@ export default function NavBar() {
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <Box flexBasis="200px">
+          <Box
+            flexBasis="200px"
+            display="flex"
+            alignItems="center"
+            height="100%"
+          >
             <Link href="/" passHref>
-              <Image
-                src="/koaLogo.svg"
-                alt="KOA Admissions Logo"
-                height="55px"
-                width="auto"
-              />
+              <Box as="a" display="flex" alignItems="center" height="100%">
+                <KoaLogo />
+              </Box>
             </Link>
           </Box>
           <Flex
@@ -121,7 +123,6 @@ export default function NavBar() {
         </Flex>
       </Box>
 
-      {/* code for drawer for mobile devices */}
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
