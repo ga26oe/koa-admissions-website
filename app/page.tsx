@@ -3,13 +3,21 @@ import { useColorModeValue } from "@chakra-ui/react";
 import HeroSection from "@/components/HeroSection";
 import Features from "@/components/Features";
 import AboutPage from "@/components/AboutPage";
-import { Box, Container, VStack, Button, Flex } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { Box, Container, VStack, Button, Flex, chakra } from "@chakra-ui/react";
+import { motion, isValidMotionProp } from "framer-motion";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { FaArrowRight } from "react-icons/fa";
 
-const MotionBox = motion(Box);
-const MotionFlex = motion(Flex);
+const MotionBox = chakra(motion.div, {
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === "children",
+});
+
+const MotionFlex = chakra(motion.div, {
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === "children",
+  baseStyle: {
+    display: "flex",
+  },
+});
 
 export default function Home() {
   const bgGradient1 = useColorModeValue(
@@ -64,17 +72,11 @@ export default function Home() {
             <MotionBox
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
             >
               <Features />
             </MotionBox>
 
-            <MotionFlex
-              justify="center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-            >
+            <MotionFlex initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <Button
                 rightIcon={<ChevronDownIcon />}
                 colorScheme="blue"
@@ -95,7 +97,6 @@ export default function Home() {
             <MotionBox
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
             >
               <AboutPage />
             </MotionBox>
@@ -103,7 +104,6 @@ export default function Home() {
             <MotionBox
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
               bgImage={bgColor}
               py={20}
               px={4}
@@ -127,7 +127,6 @@ export default function Home() {
                   <MotionBox
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
                   >
                     <Box
                       as="h2"
@@ -149,7 +148,6 @@ export default function Home() {
                   <MotionBox
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
                   >
                     <Box
                       fontSize={{ base: "lg", md: "xl" }}
@@ -164,7 +162,6 @@ export default function Home() {
                   <MotionBox
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
                   >
                     <Button
                       as="a"

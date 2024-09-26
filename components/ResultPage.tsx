@@ -1,128 +1,219 @@
 "use client";
 
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
-  Container,
   Flex,
-  Heading,
   Text,
-  SimpleGrid,
-  Avatar,
+  Heading,
   VStack,
   HStack,
-  Icon,
+  IconButton,
   useColorModeValue,
+  Container,
+  Icon,
+  chakra,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { motion, AnimatePresence, isValidMotionProp } from "framer-motion";
 import {
-  FaQuoteLeft,
+  FaStar,
   FaGraduationCap,
   FaBriefcase,
-  FaStar,
+  FaPlay,
+  FaPause,
 } from "react-icons/fa";
 
-const MotionBox = motion(Box);
+const MotionBox = chakra(motion.div, {
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === "children",
+});
 
 interface Testimonial {
   name: string;
   role: string;
   content: string;
-  avatar: string;
+  statistic: string;
+  statisticLabel: string;
+  colleges: string[];
+  videoUrl: string;
 }
 
 const testimonials: Testimonial[] = [
   {
-    name: "Dylan McLish",
-    role: "Software Engineer at Lasagna Capital",
+    name: "Aniket Mukherjee",
+    role: "Princeton 2024 Graduate",
     content:
-      "KOA Admissions was instrumental in helping me secure my dream job. Their guidance throughout the college application process was invaluable.",
-    avatar:
-      "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80",
+      "With KOA Admissions' guidance, I gained a deep understanding of the application process and was able to showcase my strengths effectively.",
+    statistic: "98%",
+    statisticLabel: "Acceptance rate to top-choice university",
+    colleges: ["Harvard", "MIT", "Stanford"],
+    videoUrl: "/Testimonials/AniketInterview.mp4",
   },
   {
-    name: "Aniket Mukherji",
-    role: "Analyst at Committee for Responsible Federal Budget",
+    name: "Connor ",
+    role: "Pre-Med Student",
     content:
-      "The personalized approach from KOA Admissions made all the difference. They helped me showcase my strengths and stand out in a competitive applicant pool.",
-    avatar:
-      "https://images.unsplash.com/photo-1598550874175-4d0ef436c909?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80",
+      "KOA Admissions helped me craft a compelling narrative that set me apart in a highly competitive applicant pool.",
+    statistic: "100%",
+    statisticLabel: "Scholarship offers received",
+    colleges: ["Johns Hopkins", "Duke", "Yale"],
+    videoUrl: "/Testimonials/Connor Interview.mp4",
   },
   {
-    name: "Alaa Omer",
-    role: "Founder of Marais Market",
+    name: "Dylan",
+    role: "Engineering Student",
     content:
-      "Thanks to KOA Admissions, I not only got into my top-choice school but also gained the confidence to pursue my entrepreneurial dreams.",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=334&q=80",
+      "The personalized strategy KOA developed for me was crucial in securing admissions to my dream schools.",
+    statistic: "5",
+    statisticLabel: "Ivy League acceptances",
+    colleges: ["Princeton", "Cornell", "UPenn"],
+    videoUrl: "/Testimonials/Dylan Interview.mp4",
   },
   {
-    name: "Yoel Yacob",
-    role: "Investment Banking Analyst at Centerview Partners",
+    name: "Emily Rodriguez",
+    role: "Business Major",
     content:
-      "The strategies and insights I gained from KOA Admissions continue to benefit me in my professional career. They truly set me up for long-term success.",
-    avatar:
-      "https://images.unsplash.com/photo-1606513542745-97629752a13b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80",
+      "KOA's expertise in essay writing and interview preparation gave me the confidence to excel in every aspect of my applications.",
+    statistic: "90%",
+    statisticLabel: "Increase in test scores",
+    colleges: ["Wharton", "Berkeley", "NYU"],
+    videoUrl: "/Testimonials/SamInterview.mp4",
+  },
+  {
+    name: "David Kim",
+    role: "Liberal Arts Student",
+    content:
+      "Thanks to KOA Admissions, I not only got into my top-choice school but also gained valuable insights about my academic and career goals.",
+    statistic: "3",
+    statisticLabel: "Leadership positions secured",
+    colleges: ["Amherst", "Williams", "Swarthmore"],
+    videoUrl: "/Testimonials/Yoel Interview.mp4",
   },
 ];
 
-const TestimonialCard: React.FC<Testimonial> = ({
+const TestimonialCard: React.FC<Testimonial & { isActive: boolean }> = ({
   name,
   role,
   content,
-  avatar,
+  statistic,
+  statisticLabel,
+  colleges,
+  videoUrl,
+  isActive,
 }) => {
+  const bgColor = useColorModeValue("blue.600", "blue.800");
+  const textColor = useColorModeValue("white", "gray.100");
+  const statisticBgColor = useColorModeValue("white", "gray.800");
+  const statisticTextColor = useColorModeValue("blue.600", "blue.300");
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  React.useEffect(() => {
+    if (isActive && videoRef.current) {
+      videoRef.current.play();
+    } else if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, [isActive]);
+
   return (
-    <MotionBox
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      borderWidth="1px"
-      borderRadius="lg"
-      p={6}
-      bg={useColorModeValue("white", "gray.800")}
-      boxShadow="xl"
-      position="relative"
-      zIndex={1}
+    <Flex
+      direction={{ base: "column", md: "row" }}
+      bg={bgColor}
+      rounded="xl"
+      overflow="hidden"
+      shadow="2xl"
+      h={{ base: "auto", md: "400px" }}
     >
-      <Icon
-        as={FaQuoteLeft}
-        w={8}
-        h={8}
-        color={useColorModeValue("blue.400", "blue.300")}
-        position="absolute"
-        top={4}
-        left={4}
-        zIndex={0}
-        opacity={0.1}
-      />
-      <VStack spacing={4} align="stretch">
-        <Text fontSize="md" fontStyle="italic">
-          {content}
+      <Box
+        w={{ base: "full", md: "50%" }}
+        h={{ base: "300px", md: "full" }}
+        position="relative"
+      >
+        <video
+          ref={videoRef}
+          src={videoUrl}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          muted
+          loop
+          playsInline
+        />
+      </Box>
+      <VStack
+        align="flex-start"
+        justify="center"
+        p={8}
+        spacing={6}
+        w={{ base: "full", md: "50%" }}
+      >
+        <Text fontSize="xl" fontWeight="medium" color={textColor}>
+          "{content}"
         </Text>
+        <Box>
+          <Text fontWeight="bold" color={textColor}>
+            {name}
+          </Text>
+          <Text color={textColor} opacity={0.8}>
+            {role}
+          </Text>
+        </Box>
         <HStack spacing={4}>
-          <Avatar src={avatar} size="md" />
-          <Box>
-            <Text fontWeight="bold" fontSize="sm">
-              {name}
-            </Text>
-            <Text
-              fontSize="xs"
-              color={useColorModeValue("gray.600", "gray.400")}
+          {colleges.map((college) => (
+            <Box
+              key={college}
+              bg="gray.100"
+              rounded="full"
+              p={2}
+              w="40px"
+              h="40px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
             >
-              {role}
-            </Text>
-          </Box>
+              <Text fontSize="xs" fontWeight="bold" color="gray.800">
+                {college.slice(0, 2)}
+              </Text>
+            </Box>
+          ))}
         </HStack>
+        <Box bg={statisticBgColor} p={4} rounded="md" w="full">
+          <Text
+            fontSize="4xl"
+            fontWeight="bold"
+            color={statisticTextColor}
+            textAlign="center"
+          >
+            {statistic}
+          </Text>
+          <Text
+            fontSize="sm"
+            fontWeight="medium"
+            color={statisticTextColor}
+            textAlign="center"
+          >
+            {statisticLabel}
+          </Text>
+        </Box>
       </VStack>
-    </MotionBox>
+    </Flex>
   );
 };
 
-const ResultsPage: React.FC = () => {
+const TestimonialSlider: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
   const bgColor = useColorModeValue("gray.50", "gray.900");
   const headingColor = useColorModeValue("gray.800", "white");
   const subHeadingColor = useColorModeValue("blue.600", "blue.300");
+
+  const nextTestimonial = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length
+    );
+  };
 
   return (
     <Box bg={bgColor} minH="100vh" py={20}>
@@ -153,13 +244,60 @@ const ResultsPage: React.FC = () => {
           </Text>
         </VStack>
 
-        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
-          {testimonials.map((testimonial, index) => (
-            <TestimonialCard key={index} {...testimonial} />
-          ))}
-        </SimpleGrid>
+        <Box position="relative" mb={16}>
+          <AnimatePresence mode="wait">
+            <MotionBox
+              key={currentIndex}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+            >
+              <TestimonialCard
+                {...testimonials[currentIndex]}
+                isActive={true}
+              />
+            </MotionBox>
+          </AnimatePresence>
 
-        <VStack spacing={8} as="section" textAlign="center" mt={20}>
+          <IconButton
+            aria-label="Previous testimonial"
+            icon={<ChevronLeftIcon />}
+            position="absolute"
+            left="-16px"
+            top="50%"
+            transform="translateY(-50%)"
+            onClick={prevTestimonial}
+            colorScheme="blue"
+            rounded="full"
+            size="lg"
+          />
+          <IconButton
+            aria-label="Next testimonial"
+            icon={<ChevronRightIcon />}
+            position="absolute"
+            right="-16px"
+            top="50%"
+            transform="translateY(-50%)"
+            onClick={nextTestimonial}
+            colorScheme="blue"
+            rounded="full"
+            size="lg"
+          />
+        </Box>
+
+        <HStack justify="center" mb={16} spacing={4}>
+          {testimonials.map((_, index) => (
+            <Box
+              key={index}
+              w={3}
+              h={3}
+              rounded="full"
+              bg={index === currentIndex ? "blue.500" : "gray.300"}
+            />
+          ))}
+        </HStack>
+
+        <VStack spacing={8} as="section" textAlign="center">
           <Heading
             as="h2"
             fontSize={{ base: "3xl", md: "4xl" }}
@@ -208,4 +346,4 @@ const ResultsPage: React.FC = () => {
   );
 };
 
-export default ResultsPage;
+export default TestimonialSlider;

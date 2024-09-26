@@ -9,8 +9,9 @@ import {
   Icon,
   useColorModeValue,
   Flex,
+  chakra,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { motion, isValidMotionProp } from "framer-motion";
 import {
   FaGraduationCap,
   FaChartLine,
@@ -19,8 +20,9 @@ import {
 } from "react-icons/fa";
 import { IconType } from "react-icons";
 
-const MotionBox = motion(Box);
-
+const MotionBox = chakra(motion.div, {
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === "children",
+});
 interface FeatureProps {
   title: string;
   text: string;
@@ -101,7 +103,6 @@ const AboutPage: React.FC = () => {
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
           >
             <Box
               bgImage={containerBgColor}
@@ -136,7 +137,6 @@ const AboutPage: React.FC = () => {
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
           >
             <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
               {features.map((feature, index) => (
@@ -148,7 +148,6 @@ const AboutPage: React.FC = () => {
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
           >
             <Box
               bgImage={containerBgColor}

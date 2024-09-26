@@ -8,12 +8,15 @@ import {
   Button,
   Flex,
   useColorModeValue,
+  chakra,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { motion, isValidMotionProp } from "framer-motion";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import LogoScroll from "./LogoScroll";
 
-const MotionBox = motion(Box);
+const MotionBox = chakra(motion.div, {
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === "children",
+});
 
 interface HeroSectionProps {
   onLearnMore: () => void;
@@ -60,7 +63,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onLearnMore }) => {
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
           >
             <Heading
               fontWeight={700}
@@ -77,7 +79,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onLearnMore }) => {
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
           >
             <LogoScroll logos={logos} direction="left" speed="normal" />
           </MotionBox>
@@ -85,7 +86,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onLearnMore }) => {
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
           >
             <Text
               fontSize="2xl"
@@ -100,7 +100,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onLearnMore }) => {
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
           >
             <Button
               rightIcon={<ChevronDownIcon />}
